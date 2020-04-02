@@ -13,7 +13,7 @@ function averageMark(a, g, p) {
 	
 	averageMark = (algebra + geography + physics) / 3; 
 	
-	return averageMark.toFixed(2);
+	return Number.parseFloat(averageMark.toFixed(2));
 }
 
 function sayHello(userName) {
