@@ -35,7 +35,7 @@ class AlarmClock {
 	
 	getCurrentFormattedTime() { 
 		let time = new Date();
-		return time.getHours() + ':' + time.getMinutes();
+		return (time.getHours() < 10 ? '0' : '') + time.getHours() + ':' + (time.getMinutes() < 10 ? '0' : '') + time.getMinutes();
 	}
 	
 	start() {
@@ -43,7 +43,6 @@ class AlarmClock {
 			this.alarmCollection.forEach(item => {
 				if (item.time == this.getCurrentFormattedTime()) {
 					item.callback();
-					this.removeClock(item.id);
 				}
 			});			
 		}
@@ -72,3 +71,21 @@ class AlarmClock {
 		this.init();
 	}
 }
+let phoneAlarm = new AlarmClock();
+phoneAlarm.addClock('21:00', () => console.log('Скоро спать'), 1);
+
+phoneAlarm.addClock('21:01', () => { console.log('Пора готовиться ко сну!'); phoneAlarm.removeClock(2)}, 2);
+
+phoneAlarm.addClock('21:01', () => console.log('Иди умываться'));
+
+phoneAlarm.addClock('21:02', () => { 
+	console.log('Иди спать, завтра рано на работу');
+	phoneAlarm.clearAlarms();
+	phoneAlarm.printAlarms();
+	}, 3);
+
+phoneAlarm.addClock('21:05', () => console.log('Иди спать, завтра рано на работу'), 1);
+phoneAlarm.addClock('21:23', () => console.log('Иди умываться'), 1);
+phoneAlarm.printAlarms();
+
+phoneAlarm.start();
